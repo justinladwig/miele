@@ -685,6 +685,78 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             entity_category=EntityCategory.DIAGNOSTIC,
         ),
     ),
+    MieleSensorDefinition(
+        types=[HOB_INDUCTION, HOB_HIGHLIGHT, HOB_INDUCT_EXTR],
+        description=MieleSensorDescription(
+            key="plateStep",
+            data_tag="state|plateStep|0|value_raw",
+            data_tag_loc="state|plateStep|0|value_localized",
+            name="Level Zone 1",
+            icon="mdi:circle-double",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            entity_registry_enabled_default=False,
+        ),
+    ),
+    MieleSensorDefinition(
+        types=[HOB_INDUCTION, HOB_HIGHLIGHT, HOB_INDUCT_EXTR],
+        description=MieleSensorDescription(
+            key="plateStep1",
+            data_tag="state|plateStep|1|value_raw",
+            data_tag_loc="state|plateStep|1|value_localized",
+            name="Level Zone 2",
+            icon="mdi:circle-double",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            entity_registry_enabled_default=False,
+        ),
+    ),
+    MieleSensorDefinition(
+        types=[HOB_INDUCTION, HOB_HIGHLIGHT, HOB_INDUCT_EXTR],
+        description=MieleSensorDescription(
+            key="plateStep2",
+            data_tag="state|plateStep|2|value_raw",
+            data_tag_loc="state|plateStep|2|value_localized",
+            name="Level Zone 3",
+            icon="mdi:circle-double",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            entity_registry_enabled_default=False,
+        ),
+    ),
+    MieleSensorDefinition(
+        types=[HOB_INDUCTION, HOB_HIGHLIGHT, HOB_INDUCT_EXTR],
+        description=MieleSensorDescription(
+            key="plateStep3",
+            data_tag="state|plateStep|3|value_raw",
+            data_tag_loc="state|plateStep|3|value_localized",
+            name="Level Zone 4",
+            icon="mdi:circle-double",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            entity_registry_enabled_default=False,
+        ),
+    ),
+    MieleSensorDefinition(
+        types=[HOB_INDUCTION, HOB_HIGHLIGHT, HOB_INDUCT_EXTR],
+        description=MieleSensorDescription(
+            key="plateStep4",
+            data_tag="state|plateStep|4|value_raw",
+            data_tag_loc="state|plateStep|4|value_localized",
+            name="Level Zone 5",
+            icon="mdi:circle-double",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            entity_registry_enabled_default=False,
+        ),
+    ),
+    MieleSensorDefinition(
+        types=[HOB_INDUCTION, HOB_HIGHLIGHT, HOB_INDUCT_EXTR],
+        description=MieleSensorDescription(
+            key="plateStep5",
+            data_tag="state|plateStep|5|value_raw",
+            data_tag_loc="state|plateStep|5|value_localized",
+            name="Level Zone 6",
+            icon="mdi:circle-double",
+            entity_category=EntityCategory.DIAGNOSTIC,
+            entity_registry_enabled_default=False,
+        ),
+    ),
 )
 
 
@@ -827,6 +899,24 @@ class MieleSensor(CoordinatorEntity, SensorEntity):
                 return self._last_started_time_reported
             self._last_started_time_reported = started_time
             return started_time
+
+        if self.entity_description.key in [
+            "plateStep",
+            "plateStep1",
+            "plateStep2",
+            "plateStep3",
+            "plateStep4",
+            "plateStep5",
+        ]:
+            if (
+                self.coordinator.data[self._ent].get(self.entity_description.data_tag)
+                is None
+            ):
+                return 0
+            else:
+                return self.coordinator.data[self._ent][
+                    self.entity_description.data_tag_loc
+                ]
 
         # Log raw and localized values for programID etc
         # Active if logger.level is DEBUG or INFO
