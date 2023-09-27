@@ -1,7 +1,7 @@
 """Constants for the Miele integration."""
 
 DOMAIN = "miele"
-VERSION = "0.1.11"
+VERSION = "0.1.15"
 API_READ_TIMEOUT = 20
 MANUFACTURER = "Miele"
 
@@ -15,7 +15,13 @@ CONF_VALUE = "value"
 # Define appliance types
 WASHING_MACHINE = 1
 TUMBLE_DRYER = 2
+WASHING_MACHINE_SEMI_PROFESSIONAL = 3
+TUMBLE_DRYER_SEMI_PROFESSIONAL = 4
+WASHING_MACHINE_PROFESSIONAL = 5
+DRYER_PROFESSIONAL = 6
 DISHWASHER = 7
+DISHWASHER_SEMI_PROFESSIONAL = 8
+DISHWASHER_PROFESSIONAL = 9
 OVEN = 12
 OVEN_MICROWAVE = 13
 HOB_HIGHLIGHT = 14
@@ -42,7 +48,13 @@ HOB_INDUCT_EXTR = 74
 APPLIANCE_TYPES = {
     WASHING_MACHINE: "washing_machine",
     TUMBLE_DRYER: "tumble_dryer",
+    WASHING_MACHINE_SEMI_PROFESSIONAL: "washing_machine_semi_pro",
+    TUMBLE_DRYER_SEMI_PROFESSIONAL: "tumble_dryer_semi_pro",
+    WASHING_MACHINE_PROFESSIONAL: "washing_machine_pro",
+    DRYER_PROFESSIONAL: "dryer_pro",
     DISHWASHER: "dishwasher",
+    DISHWASHER_SEMI_PROFESSIONAL: "dish_washer_semi_pro",
+    DISHWASHER_PROFESSIONAL: "dishwasher_pro",
     OVEN: "oven",
     OVEN_MICROWAVE: "oven_microwave",
     HOB_HIGHLIGHT: "hob_highlight",
@@ -70,6 +82,7 @@ APPLIANCE_TYPES = {
 APPLIANCE_ICONS = {
     WASHING_MACHINE: "mdi:washing-machine",
     TUMBLE_DRYER: "mdi:tumble-dryer",
+    TUMBLE_DRYER_SEMI_PROFESSIONAL: "mdi:tumble-dryer",
     DISHWASHER: "mdi:dishwasher",
     OVEN: "mdi:chef-hat",
     OVEN_MICROWAVE: "mdi:chef-hat",
@@ -210,6 +223,12 @@ STATE_PROGRAM_PHASE = {
     3073: "heating",  # in common with coffee system
     3074: "process_running",
     3078: "process_finished",
+    3084: "energy_save",
+    # Microwave
+    3329: "heating",
+    3330: "process_running",
+    3334: "process_finished",
+    3340: "energy_save",
     # Coffee system
     4352: "not_running",
     4353: "espresso",
@@ -347,6 +366,7 @@ OVEN_PROGRAM_ID = {
     11: "economy_grill",
     13: "fan_plus",
     14: "intensive_bake",
+    19: "microwave",
     24: "conventional_heat",
     25: "top_heat",
     29: "fan_grill",
@@ -389,7 +409,7 @@ COFFEE_SYSTEM_PROGRAM_ID = {
     24006: "latte_macchiato",
     24007: "espresso_macchiato",
     24008: "cafe_au_lait",
-    24009: "caffellatte",
+    24009: "caffe_latte",
     24012: "flat_white",
     24013: "very_hot_water",
     24014: "hot_water",
@@ -411,7 +431,7 @@ COFFEE_SYSTEM_PROGRAM_ID = {
     24038: "latte_macchiato",
     24039: "espresso_macchiato",
     24040: "cafe_au_lait",
-    24041: "caffellatte",
+    24041: "caffe_latte",
     24044: "flat_white",
     24045: "very_hot_water",
     24046: "hot_water",
@@ -433,7 +453,7 @@ COFFEE_SYSTEM_PROGRAM_ID = {
     24070: "latte_macchiato",
     24071: "espresso_macchiato",
     24072: "cafe_au_lait",
-    24073: "caffellatte",
+    24073: "caffe_latte",
     24076: "flat_white",
     24077: "very_hot_water",
     24078: "hot_water",
@@ -455,7 +475,7 @@ COFFEE_SYSTEM_PROGRAM_ID = {
     24102: "latte_macchiato",
     24103: "espresso_macchiato",
     24104: "cafe_au_lait",
-    24105: "caffellatte",
+    24105: "caffe_latte",
     24108: "flat_white",
     24109: "very_hot_water",
     24110: "hot_water",
@@ -477,7 +497,7 @@ COFFEE_SYSTEM_PROGRAM_ID = {
     24134: "latte_macchiato",
     24135: "espresso_macchiato",
     24136: "cafe_au_lait",
-    24137: "caffellatte",
+    24137: "caffe_latte",
     24140: "flat_white",
     24141: "very_hot_water",
     24142: "hot_water",
@@ -509,7 +529,7 @@ COFFEE_SYSTEM_PROGRAM_ID = {
     24555: "appliance_settings",  # total long coffee
     24556: "appliance_settings",  # total italian cappuccino
     24557: "appliance_settings",  # total latte macchiato
-    24558: "appliance_settings",  # total caffellatte
+    24558: "appliance_settings",  # total caffe latte
     24560: "appliance_settings",  # total espresso macchiato
     24562: "appliance_settings",  # total flat white
     24563: "appliance_settings",  # total coffee with milk
@@ -546,6 +566,7 @@ STATE_PROGRAM_ID = {
     TUMBLE_DRYER: TUMBLE_DRYER_PROGRAM_ID,
     DISHWASHER: DISHWASHER_PROGRAM_ID,
     OVEN: OVEN_PROGRAM_ID,
+    OVEN_MICROWAVE: OVEN_PROGRAM_ID,
     WASHER_DRYER: WASHING_MACHINE_PROGRAM_ID,
     ROBOT_VACUUM_CLEANER: ROBOT_VACUUM_CLEANER_PROGRAM_ID,
     COFFEE_SYSTEM: COFFEE_SYSTEM_PROGRAM_ID,

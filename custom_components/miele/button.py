@@ -6,6 +6,7 @@ import logging
 from typing import Any, Final
 
 import aiohttp
+
 from homeassistant.components.button import ButtonEntity, ButtonEntityDescription
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
@@ -37,6 +38,7 @@ from .const import (
     STEAM_OVEN_COMBI,
     STEAM_OVEN_MICRO,
     TUMBLE_DRYER,
+    TUMBLE_DRYER_SEMI_PROFESSIONAL,
     WASHER_DRYER,
     WASHING_MACHINE,
 )
@@ -65,6 +67,7 @@ BUTTON_TYPES: Final[tuple[MieleButtonDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
@@ -85,6 +88,7 @@ BUTTON_TYPES: Final[tuple[MieleButtonDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
@@ -170,7 +174,6 @@ class MieleButton(CoordinatorEntity, ButtonEntity):
 
     def _action_available(self, action) -> bool:
         """Check if action is available according to API."""
-        # _LOGGER.debug("%s _action_available: %s", self.entity_description.name, action)
         if PROCESS_ACTION in action:
             value = action.get(PROCESS_ACTION)
             action_data = (
@@ -180,13 +183,13 @@ class MieleButton(CoordinatorEntity, ButtonEntity):
             )
             return value in action_data
 
-        elif POWER_ON in action:
+        if POWER_ON in action:
             action_data = (
                 self._api_data.get(ACTIONS, {}).get(self._ent, {}).get(POWER_ON, False)
             )
             return action_data
 
-        elif POWER_OFF in action:
+        if POWER_OFF in action:
             action_data = (
                 self._api_data.get(ACTIONS, {}).get(self._ent, {}).get(POWER_OFF, False)
             )
@@ -208,7 +211,7 @@ class MieleButton(CoordinatorEntity, ButtonEntity):
 
     async def async_press(self):
         """Press the button."""
-        _LOGGER.debug("press: %s", self._attr_name)
+        _LOGGER.debug("press: %s", self.entity_description.key)
         if self._action_available(self.entity_description.press_data):
             try:
                 await self._api.send_action(
@@ -221,6 +224,6 @@ class MieleButton(CoordinatorEntity, ButtonEntity):
         else:
             _LOGGER.warning(
                 "Device does not accept this action now: %s / %s",
-                self._attr_name,
+                self.entity_description.key,
                 self.entity_description.press_data,
             )

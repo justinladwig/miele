@@ -2,7 +2,6 @@
 
 # Miele Integration for Home Assistant
 
-
 The capabilities are based on Miele API version 1.0.6. The official capability overview is here https://www.miele.com/developer/assets/API_V1.x.x_capabilities_by_device.pdf . Note that this matrix is not entirely correct. Some devices lack support and some devices support features that are not marked.
 
 All supported appliances will show a status sensor, some appliances will show more sensors, however only freezers, refridgerators, coffee machines, dishwashers and washer/dryers will have a more complete support. Changes on the appliances will be pushed to HA and displayed immediately. As a backup the status is read from the cloud every 60 seconds.
@@ -40,32 +39,27 @@ Documentation (at least some...) can be found in the [wiki](https://github.com/a
 There are many ways to setup a development environment.
 
 #### Dev Container
-One option is to use the VS Code Dev Container. You need to have Docker installed.
 
-1. For best performance, make sure to clone the repo in WSL2 if running on Windows.
+The recommended option is to use the VS Code Dev Container. You need to have Docker installed.
 
-    ```console
-    $ git clone https://github.com/{your_user}/miele
-    ```
-1. Open the repository in VS Code.
+1. For best performance, clone the repo in a named volume.
+1. Open a new, empty window in VS Code.
+1. Press `Ctrl`+`Shift`+`P` and select `Dev Containers: Clone Respository in Named Container Volume`
+1. Fill in your repo and your chosen names at the prompts
+1. Wait for the container to be built
 
-    ```console
-    $ code miele # or code-insiders miele
-    ```
-1. VS Code will ask to reopen the folder in a container
-    - If not, press `Ctrl`+`Shift`+`P` and select `Dev Containers: Reopen in Dev Container`.
-1. Wait for the container to be built.
 1. Press `Ctrl`+`Shift`+`P` and select `Tasks: Run Task` > `Run Home Assistant on port 9123`.
 1. Wait for Home Assistant to start and go to http://localhost:9123/.
 1. Walk through the Home Assistant first-launch UI.
 1. Go to http://localhost:9123/config/integrations, click `Add Integration` and add the `Miele` integration.
 1. To debug, press `F5` to attach to the Home Assistant running in the container.
-1. You can enable a persistent (survives rebuild of container) config directory for Home Assistant by uncommenting the mounts statement in devcontainer.json and rebuild the container.
+1. Your configuration.yaml will be persistent (survives rebuild of container).
 
 #### Without a Dev Container
+
 Alternatively, you can run Home Assistant directly on your machine/WSL2. The following procedure works fine in the hands of the maintainer developing with VS Code on WSL2/Windows.
 
-- Make sure you have at least python3.9 installed on your WSL.
+- Make sure you have at least python3.11 installed on your WSL.
 - Create a fork on github
 
 ```
@@ -83,6 +77,17 @@ There are many ways to test the integration, three examples are:
 - copy all files in `custom_comonents/miele` to `custom_components/miele` in your HA configuration directory
 - mount `custom_components/miele` into a HA development container
 
+### Translation
+To handle submission of translations we are using [Lokalise](https://lokalise.com/login/). They provide us with an amazing platform that is easy to use and maintain.
+
+To help out with the translation of Miele integration  you need an account on Lokalise, the easiest way to get one is to [click here](https://lokalise.com/login/)  then select "Log in with GitHub".
+
+When you have created the account, the [click here](https://app.lokalise.com/public/50153460650965e9a01e21.29484567/) to join the project. If you want to add a new language, please open an issue.
+
+The translations are pulled when a new release of the integration is prepared. So you must wait until there is a new release until your look for your updates.
+
+If you want to add new elements that needs translation you should enter them in /translations/en.json and submit a PR. The new keys will appear in Lokalise when the PR is merged.
+
 ### Debugging and filing issues
 
 If you find bugs or other issues please download diagnostic information from the Miele integration card or from the device page and attach the file to your issue report.
@@ -99,3 +104,8 @@ The package and its author are not affiliated with Miele. Use at your own risk.
 ## License
 
 The package is released under the MIT license.
+
+## Support and cooperation
+This project is supported by
+
+[<img src="https://raw.githubusercontent.com/astrandb/documents/fef0776bbb7924e0253b9755d7928631fb19d5c7/img/Lokalise_logo_colour_black_text.svg" width=120>](https://lokalise.com)

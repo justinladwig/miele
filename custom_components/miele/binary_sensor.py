@@ -1,9 +1,10 @@
 """Platform for Miele binary_sensor integration."""
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 import logging
-from typing import Any, Callable, Final
+from typing import Any, Final
 
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
@@ -42,6 +43,7 @@ from .const import (
     STEAM_OVEN_COMBI,
     STEAM_OVEN_MICRO,
     TUMBLE_DRYER,
+    TUMBLE_DRYER_SEMI_PROFESSIONAL,
     WASHER_DRYER,
     WASHING_MACHINE,
     WINE_CABINET,
@@ -75,6 +77,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
@@ -102,6 +105,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
@@ -136,6 +140,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
@@ -173,6 +178,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
@@ -206,6 +212,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
@@ -240,6 +247,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,

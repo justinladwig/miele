@@ -10,6 +10,8 @@ import logging
 from aiohttp import ClientResponseError
 import async_timeout
 import flatdict
+import voluptuous as vol
+
 from homeassistant.components import persistent_notification
 from homeassistant.components.application_credentials import (
     ClientCredential,
@@ -18,8 +20,7 @@ from homeassistant.components.application_credentials import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET, Platform
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import aiohttp_client
-from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import aiohttp_client, config_validation as cv
 from homeassistant.helpers.config_entry_oauth2_flow import (
     OAuth2Session,
     async_get_config_entry_implementation,
@@ -31,7 +32,6 @@ from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
     UpdateFailed,
 )
-import voluptuous as vol
 
 from .api import AsyncConfigEntryAuth
 from .const import (
@@ -51,6 +51,7 @@ from .devcap import (  # noqa: F401
     TEST_ACTION_21,
     TEST_ACTION_23,
     TEST_DATA_1,
+    TEST_DATA_4,
     TEST_DATA_7,
     TEST_DATA_12,
     TEST_DATA_17_CM,
@@ -196,6 +197,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     async def _callback_update_data(data) -> None:
         # data["1223001"] = TEST_DATA_1
+        # data["1223004"] = TEST_DATA_4
         # data["1223007"] = TEST_DATA_7
         # data["1223012"] = TEST_DATA_12
         # data["122A017"] = TEST_DATA_17_CM
@@ -276,6 +278,7 @@ async def get_coordinator(
         hass.data[DOMAIN][entry.entry_id]["retries_401"] = 0
         flat_result: dict = {}
         # result["1223001"] = TEST_DATA_1
+        # result["1223004"] = TEST_DATA_4
         # result["1223007"] = TEST_DATA_7
         # result["1223012"] = TEST_DATA_12
         # result["122A017"] = TEST_DATA_17_CM

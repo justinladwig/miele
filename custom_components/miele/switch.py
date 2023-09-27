@@ -6,6 +6,7 @@ import logging
 from typing import Any, Final
 
 import aiohttp
+
 from homeassistant.components.switch import SwitchEntity, SwitchEntityDescription
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
@@ -43,6 +44,7 @@ from .const import (
     STEAM_OVEN_COMBI,
     STEAM_OVEN_MICRO,
     TUMBLE_DRYER,
+    TUMBLE_DRYER_SEMI_PROFESSIONAL,
     WASHER_DRYER,
     WASHING_MACHINE,
     WINE_CABINET_FREEZER,
@@ -100,6 +102,7 @@ SWITCH_TYPES: Final[tuple[MieleSwitchDefinition, ...]] = (
         types=[
             WASHING_MACHINE,
             TUMBLE_DRYER,
+            TUMBLE_DRYER_SEMI_PROFESSIONAL,
             DISHWASHER,
             OVEN,
             OVEN_MICROWAVE,
