@@ -1,4 +1,7 @@
 {
+  "application_credentials": {
+    "description": "Navigeer naar [\"Get involved\" at Miele developer site]({register_url}) om referenties aan te vragen en voer deze hieronder in."
+  },
   "config": {
     "abort": {
       "already_configured": "Account is al geconfigureerd",
@@ -17,9 +20,53 @@
         "title": "Kies een authenticatie methode"
       },
       "reauth_confirm": {
-        "description": "De Miele integratie moet uw account {account} opnieuw authenticeren.",
+        "description": "De Miele integratie moet je account {account} opnieuw authenticeren.",
         "title": "Her-authenticatie Integratie"
+      },
+      "zeroconf_confirm": {
+        "description": "Je staat op het punt ` {name} ` en eventuele andere Miele-apparaten toe te voegen aan Home Assistant. \n\n **Om het proces te voltooien, moet je jouw inloggegevens invoeren.**",
+        "title": "Bevestig dat je de Miele-integratie toevoegt"
       }
+    }
+  },
+  "device_automation": {
+    "condition_type": {
+      "failure": "{entity_name} is mislukt",
+      "idle": "{entity_name} is inactief",
+      "not_connected": "{entity_name} is niet verbonden",
+      "off": "{entity_name} is uitgeschakeld",
+      "on": "{entity_name} is ingeschakeld",
+      "pause": "{entity_name} wordt onderbroken",
+      "program_ended": "{entity_name} heeft het programma beëindigd",
+      "program_interrupted": "{entity_name} heeft het programma onderbroken",
+      "programmed": "{entity_name} is geprogrammeerd",
+      "rinse_hold": "{entity_name} bevindt zich in een spoelstop",
+      "running": "{entity_name} wordt uitgevoerd",
+      "service": "{entity_name} is in gebruik",
+      "supercooling": "{entity_name} is aan het superkoelen",
+      "supercooling_superfreezing": "{entity_name} is aan het superkoelen/supervriezen",
+      "superfreezing": "{entity_name} is aan het supervriezen",
+      "superheating": "{entity_name} is aan het oververhitten",
+      "waiting_to_start": "{entity_name} wacht om te starten"
+    },
+    "trigger_type": {
+      "failure": "{entity_name} Fout",
+      "idle": "{entity_name} Inactief",
+      "not_connected": "{entity_name} Niet verbonden",
+      "off": "{entity_name} Uit",
+      "on": "{entity_name} Aan",
+      "pause": "{entity_name} Pauze",
+      "program_ended": "{entity_name} Programma beëindigd",
+      "program_interrupted": "{entity_name} Programma onderbroken",
+      "programmed": "{entity_name} Geprogrammeerd",
+      "rinse_hold": "{entity_name} Spoelstop",
+      "running": "{entity_name} Actief",
+      "service": "{entity_name} Service",
+      "supercooling": "{entity_name} Superkoelen",
+      "supercooling_superfreezing": "{entity_name} Superkoelen/supervriezen",
+      "superfreezing": "{entity_name} Supervriezen",
+      "superheating": "{entity_name} Oververhitting",
+      "waiting_to_start": "{entity_name} Wachten om te starten"
     }
   },
   "entity": {
@@ -87,6 +134,12 @@
       },
       "plate_4": {
         "name": "Plate 4"
+      },
+      "plate_5": {
+        "name": "Plate 5"
+      },
+      "plate_6": {
+        "name": "Plate 6"
       }
     },
     "sensor": {
@@ -130,7 +183,7 @@
           "1_tray": "1 plaat",
           "2_trays": "2 platen",
           "appliance_rinse": "Apparaat spoelen",
-          "appliance_settings": "Apparaat instellinen menu",
+          "appliance_settings": "Menu Apparaatinstellingen",
           "auto": "Auto",
           "auto_roast": "Automatisch roosteren",
           "automatic": "Automatisch",
@@ -149,7 +202,7 @@
           "check_appliance": "Controleer apparaat",
           "clean_machine": "Apparaat reinigen",
           "coffee": "Koffie",
-          "conventional_heat": "Boven\/onder warmte",
+          "conventional_heat": "Boven/onder warmte",
           "cool_air": "Koud luchten",
           "cottons": "Katoen",
           "cottons_eco": "Katoen ECO",
@@ -162,7 +215,7 @@
           "descaling": "Apparaat ontkalken",
           "down_duvets": "Dekbedden",
           "down_filled_items": "Dons",
-          "drain_spin": "Pompen \/ Centrifugeren",
+          "drain_spin": "Pompen / Centrifugeren",
           "eco": "ECO",
           "eco_40_60": "ECO 40-60",
           "eco_fan_heat": "Hete lucht ECO",
@@ -195,7 +248,7 @@
           "latte_macchiato": "Latte macchiato",
           "long_coffee": "Long black",
           "maintenance": "Onderhoudsprogramma",
-          "microwave": "Microgolf",
+          "microwave": "Magnetron",
           "milk_foam": "Melkschuim",
           "milk_pipework_clean": "Melkleiding reinigen",
           "milk_pipework_rinse": "Melkleiding spoelen",
@@ -210,11 +263,11 @@
           "rinse": "Spoelen",
           "rinse_out_lint": "Pluisjes uitspoelen",
           "ristretto": "Ristretto",
-          "separate_rinse_starch": "Alleen Spoelen \/ Stijven",
+          "separate_rinse_starch": "Alleen Spoelen / Stijven",
           "shirts": "Overhemden",
           "silent": "Stil",
           "silks": "Zijde",
-          "silks_handcare": "Handverzorgde zijde",
+          "silks_handcare": "Zijde handverzorging",
           "smoothing": "Gladstrijken",
           "solar_save": "SolarSave",
           "sportswear": "Sportkleding",
@@ -231,7 +284,7 @@
           "warm_air": "Warm luchten",
           "white_tea": "Witte thee",
           "woollens": "Wol",
-          "woollens_handcare": "Handverzorgde wol"
+          "woollens_handcare": "Wollen handverzorging"
         }
       },
       "program_phase": {
@@ -244,7 +297,7 @@
           "blocked_brushes": "Borstels geblokkeerd",
           "blocked_drive_wheels": "Aandrijfwielen geblokkeerd",
           "blocked_front_wheel": "Voorwiel geblokkeerd",
-          "cleaning": "Cleaning",
+          "cleaning": "Schoonmaken",
           "comfort_cooling": "Comfort koelen",
           "cooling_down": "Afkoelen",
           "dirty_sensors": "Sensoren verontreinigd",
@@ -291,7 +344,7 @@
           "rinse_hold": "Spoelstop",
           "rinse_out_lint": "Pluisjes uitspoelen",
           "rinses": "Spoelcycli",
-          "safety_cooling": "Veiligheidskoelen",
+          "safety_cooling": "Veiligheidskoeling",
           "slightly_dry": "Lichtelijk droog",
           "smoothing": "Gladstrijken",
           "soak": "Inweken",
@@ -312,7 +365,7 @@
         "name": "Programma type",
         "state": {
           "automatic_program": "Automatisch programma",
-          "cleaning_care_program": "Schoonmaak \/ onderhoudsprogramma",
+          "cleaning_care_program": "Schoonmaak / onderhoudsprogramma",
           "maintenance_program": "Onderhoudsprogramma",
           "normal_operation_mode": "Normale werking",
           "own_program": "Eigen programma"
@@ -349,7 +402,7 @@
           "running": "Bezig",
           "service": "Onderhoud",
           "supercooling": "Super koelen",
-          "supercooling_superfreezing": "Super koelen \/ verwarmen",
+          "supercooling_superfreezing": "Super koelen / verwarmen",
           "superfreezing": "Superbevriezing",
           "superheating": "Super verwarmen",
           "waiting_to_start": "Start ingepland"
@@ -396,7 +449,7 @@
     },
     "switch": {
       "power_on": {
-        "name": "Power on"
+        "name": "Schakel in"
       },
       "supercooling": {
         "name": "Super koelen"
@@ -407,7 +460,7 @@
     },
     "vacuum": {
       "vacuum": {
-        "name": "Vacuum",
+        "name": "Vacuüm",
         "state_attributes": {
           "status": {
             "name": "Status",
@@ -419,13 +472,60 @@
               "dirty_sensors": "Sensoren verontreinigd",
               "dust_box_missing": "Stofreservoir ontbreekt",
               "going_to_target_area": "Op weg naar het doelgebied",
-              "internal_fault_reboot": "Interne fout - Herstarten",
+              "internal_fault_reboot": "Interne fout - Opnieuw opstarten",
               "remote_controlled": "Op afstand bediend",
               "wheel_lifted": "Wiel los van de grond"
             }
           }
         }
       }
+    }
+  },
+  "selector": {
+    "process_action_options": {
+      "options": {
+        "pause": "Pauze",
+        "start": "Start",
+        "start_supercooling": "Start superkoeling",
+        "start_superfreezing": "Start superfreezing",
+        "stop": "Stop",
+        "stop_supercooling": "Stop superkoeling",
+        "stop_superfreezing": "Stop superfreezing"
+      }
+    }
+  },
+  "services": {
+    "generic_action": {
+      "description": "Voer één actie uit op een apparaat",
+      "name": "Voer generieke actie uit"
+    },
+    "process_action": {
+      "description": "Voert procesacties uit als aan de voorwaarden is voldaan.",
+      "fields": {
+        "action": {
+          "description": "Selecteer een procesactie om uit te voeren.",
+          "name": "Actie"
+        }
+      },
+      "name": "Procesactie uitvoeren"
+    },
+    "raw": {
+      "description": "Voer service uit met minimale validatie.",
+      "fields": {
+        "extra": {
+          "description": "Een woordenboek met parameters",
+          "name": "Extra"
+        },
+        "serialno": {
+          "description": "Het serienummer van het apparaat",
+          "name": "Serienummer"
+        }
+      },
+      "name": "Ruwe actie uitvoeren"
+    },
+    "set_program": {
+      "description": "Programma instellen en starten met optionele parameters.",
+      "name": "Programma instellen"
     }
   },
   "system_health": {

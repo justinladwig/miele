@@ -43,6 +43,7 @@ from .const import (
     STEAM_OVEN,
     STEAM_OVEN_COMBI,
     STEAM_OVEN_MICRO,
+    STEAM_OVEN_MK2,
     TUMBLE_DRYER,
     TUMBLE_DRYER_SEMI_PROFESSIONAL,
     WASHER_DRYER,
@@ -114,6 +115,7 @@ SWITCH_TYPES: Final[tuple[MieleSwitchDefinition, ...]] = (
             STEAM_OVEN_COMBI,
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSwitchDescription(
             key="poweronoff",
@@ -186,6 +188,7 @@ class MieleSwitch(CoordinatorEntity, SwitchEntity):
         self._attr_unique_id = f"{self.entity_description.key}-{self._ent}"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._ent)},
+            serial_number=self._ent,
             name=appl_type,
             manufacturer=MANUFACTURER,
             model=self.coordinator.data[self._ent]["ident|deviceIdentLabel|techType"],

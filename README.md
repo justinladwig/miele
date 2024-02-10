@@ -1,8 +1,8 @@
-[![Miele](https://img.shields.io/github/v/release/astrandb/miele)](https://github.com/astrandb/miele/releases/latest) [![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://github.com/hacs/integration) ![Validate with hassfest](https://github.com/astrandb/miele/workflows/Validate%20with%20hassfest/badge.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2023.svg) [![Miele_downloads](https://img.shields.io/github/downloads/astrandb/miele/total)](https://github.com/astrandb/miele) [![Miele_downloads](https://img.shields.io/github/downloads/astrandb/miele/latest/total)](https://github.com/astrandb/miele)
+[![Miele](https://img.shields.io/github/v/release/astrandb/miele)](https://github.com/astrandb/miele/releases/latest) [![hacs_badge](https://img.shields.io/badge/HACS-Default-blue.svg)](https://github.com/hacs/integration) ![Validate with hassfest](https://github.com/astrandb/miele/workflows/Validate%20with%20hassfest/badge.svg) ![Maintenance](https://img.shields.io/maintenance/yes/2024.svg) [![Miele_downloads](https://img.shields.io/github/downloads/astrandb/miele/total)](https://github.com/astrandb/miele) [![Miele_downloads](https://img.shields.io/github/downloads/astrandb/miele/latest/total)](https://github.com/astrandb/miele)
 
 # Miele Integration for Home Assistant
 
-The capabilities are based on Miele API version 1.0.6. The official capability overview is here https://www.miele.com/developer/assets/API_V1.x.x_capabilities_by_device.pdf . Note that this matrix is not entirely correct. Some devices lack support and some devices support features that are not marked.
+The capabilities are based on Miele API version 1.0.7. The official capability overview is here https://www.miele.com/developer/assets/API_V1.x.x_capabilities_by_device.pdf . Note that this matrix is not entirely correct. Some devices lack support and some devices support features that are not marked.
 
 All supported appliances will show a status sensor, some appliances will show more sensors, however only freezers, refridgerators, coffee machines, dishwashers and washer/dryers will have a more complete support. Changes on the appliances will be pushed to HA and displayed immediately. As a backup the status is read from the cloud every 60 seconds.
 
@@ -30,9 +30,13 @@ Goto `Integrations` > `Add Integration` and select `Miele`. Sometimes you must r
 Follow instructions to authenticate with Miele cloud server. First, you'll provide the app credentials acquired at https://www.miele.com/developer/.
 Next, you'll sign in using your Miele account. Allow full access for the Home Assistant client.
 
-### Wiki - Documentation
+### Support - Wiki - Documentation
 
 Documentation (at least some...) can be found in the [wiki](https://github.com/astrandb/miele/wiki)
+
+[Discussion forum](https://github.com/astrandb/miele/discussions)
+
+[Discord chat](https://discord.gg/Us4PSG74vw)
 
 ### Development
 
@@ -82,11 +86,11 @@ To handle submission of translations we are using [Lokalise](https://lokalise.co
 
 To help out with the translation of Miele integration  you need an account on Lokalise, the easiest way to get one is to [click here](https://lokalise.com/login/)  then select "Log in with GitHub".
 
-When you have created the account, the [click here](https://app.lokalise.com/public/50153460650965e9a01e21.29484567/) to join the project. If you want to add a new language, please open an issue.
+When you have created the account, [click here](https://app.lokalise.com/public/50153460650965e9a01e21.29484567/) to join the project. If you want to add a new language, please open an issue.
 
-The translations are pulled when a new release of the integration is prepared. So you must wait until there is a new release until your look for your updates.
+The translations are pulled when a new release of the integration is prepared. So you must wait until there is a new release before you look for your updates.
 
-If you want to add new elements that needs translation you should enter them in /translations/en.json and submit a PR. The new keys will appear in Lokalise when the PR is merged.
+If you want to add new elements that need translation you should enter them in /translations/en.json and submit a PR. The new keys will appear in Lokalise when the PR is merged.
 
 ### Debugging and filing issues
 

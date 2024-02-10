@@ -7,7 +7,10 @@ categories:
     labels:
       - "feature"
       - "enhancement"
-  - title: "Bug Fixes"
+  - title: "Breaking changes"
+    labels:
+      - "breaking"
+  - title: "Bug fixes"
     labels:
       - "fix"
       - "bugfix"
@@ -16,6 +19,7 @@ categories:
     labels:
       - "translation"
   - title: "Dependencies"
+    collapse-after: 2
     labels:
       - "dependencies"
       - "dependency"
@@ -24,19 +28,24 @@ categories:
   - title: "Code quality and optimizations"
     label: "code quality"
   - title: "Development tools"
-    label: "development tools"
+    labels:
+      - "development tools"
+      - "dev-tools"
+
 change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 
 template: |
-  [![Downloads for this release](https://img.shields.io/github/downloads/astrandb/miele/v$RESOLVED_VERSION/total.svg)](https://github.com/astrandb/miele/releases/v$RESOLVED_VERSION)
+  [![Downloads for this release](https://img.shields.io/github/downloads-pre/$OWNER/$REPOSITORY/v$RESOLVED_VERSION/total.svg)](https://github.com/$OWNER/$REPOSITORY/releases/v$RESOLVED_VERSION)
 
+  <!--
   ### Checklist for release
   - Download translations PR from Lokalize
-  - Run make lint
-  - Run make bump
+  - Run ruff linter
+  - Run make bump - select proper variant from Makefile
   - Review the draft below
   - Remove this checklist
+  -->
 
   ## Notable Changes
 
@@ -46,9 +55,6 @@ autolabeler:
   - label: "maintenance"
     files:
       - "*.md"
-      - ".github/*"
-      - ".ruff.toml"
-      - ".pre-commit-config.yaml"
   - label: "bugfix"
     title:
       - "/fix/i"
@@ -59,8 +65,14 @@ autolabeler:
     title:
       - "Lokalise:"
     files:
-      - "*/translations/*.json"
+      - "**/translations/*.json"
   - label: "development tools"
     files:
       - ".devcontainer/*"
       - ".devcontainer.json"
+      - "Makefile"
+      - "setup.cfg"
+      - "pyproject.toml"
+      - ".github/*"
+      - ".ruff.toml"
+      - ".pre-commit-config.yaml"

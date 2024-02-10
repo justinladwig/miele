@@ -35,6 +35,7 @@ from .const import (
     STEAM_OVEN,
     STEAM_OVEN_COMBI,
     STEAM_OVEN_MICRO,
+    STEAM_OVEN_MK2,
     WINE_CABINET,
     WINE_CABINET_FREEZER,
     WINE_CONDITIONING_UNIT,
@@ -78,6 +79,7 @@ LIGHT_TYPES: Final[tuple[MieleLightDefinition, ...]] = (
             WINE_STORAGE_CONDITIONING_UNIT,
             STEAM_OVEN_MICRO,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleLightDescription(
             key="light",
@@ -156,6 +158,7 @@ class MieleLight(CoordinatorEntity, LightEntity):
         self._attr_supported_features = self.entity_description.supported_features
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._ent)},
+            serial_number=self._ent,
             name=appl_type,
             manufacturer=MANUFACTURER,
             model=self.coordinator.data[self._ent]["ident|deviceIdentLabel|techType"],

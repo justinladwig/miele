@@ -12,7 +12,7 @@ from homeassistant.components.climate import (
     ClimateEntityFeature,
 )
 from homeassistant.components.climate.const import HVACMode
-from homeassistant.const import ATTR_TEMPERATURE, TEMP_CELSIUS
+from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -62,7 +62,7 @@ CLIMATE_TYPES: Final[tuple[MieleClimateDefinition, ...]] = (
             current_temperature_tag="state|temperature|0|value_raw",
             target_temperature_tag="state|targetTemperature|0|value_raw",
             name="Zone 1",
-            temperature_unit=TEMP_CELSIUS,
+            temperature_unit=UnitOfTemperature.CELSIUS,
             precision=1.0,
             target_temperature_step=1.0,
             hvac_modes=[HVACMode.COOL],
@@ -77,7 +77,7 @@ CLIMATE_TYPES: Final[tuple[MieleClimateDefinition, ...]] = (
             current_temperature_tag="state|temperature|1|value_raw",
             target_temperature_tag="state|targetTemperature|1|value_raw",
             name="Zone 2",
-            temperature_unit=TEMP_CELSIUS,
+            temperature_unit=UnitOfTemperature.CELSIUS,
             precision=1.0,
             target_temperature_step=1.0,
             hvac_modes=[HVACMode.COOL],
@@ -92,7 +92,7 @@ CLIMATE_TYPES: Final[tuple[MieleClimateDefinition, ...]] = (
             current_temperature_tag="state|temperature|2|value_raw",
             target_temperature_tag="state|targetTemperature|2|value_raw",
             name="Zone 3",
-            temperature_unit=TEMP_CELSIUS,
+            temperature_unit=UnitOfTemperature.CELSIUS,
             precision=1.0,
             target_temperature_step=1.0,
             hvac_modes=[HVACMode.COOL],
@@ -116,7 +116,9 @@ async def async_setup_entry(
         for definition in CLIMATE_TYPES:
             if (
                 coordinator.data[ent]["ident|type|value_raw"] in definition.types
-                and coordinator.data[ent][definition.description.target_temperature_tag]
+                and coordinator.data[ent].get(
+                    definition.description.target_temperature_tag, -32768
+                )
                 != -32768
             ):
                 entities.append(
@@ -199,14 +201,14 @@ class MieleClimate(CoordinatorEntity, ClimateEntity):
             self._attr_max_temp = self._eid[ACTIONS][self._ent][TARGET_TEMPERATURE][
                 self._ed.zone
             ]["max"]
-        except KeyError:
+        except (IndexError, KeyError):
             _LOGGER.debug("Could not retreive max_target_temp on %s from API", name)
             self._attr_max_temp = None
         try:
             self._attr_min_temp = self._eid[ACTIONS][self._ent][TARGET_TEMPERATURE][
                 self._ed.zone
             ]["min"]
-        except KeyError:
+        except (IndexError, KeyError):
             _LOGGER.debug("Could not retreive min_target_temp %s from API", name)
             self._attr_min_temp = None
 
@@ -216,6 +218,7 @@ class MieleClimate(CoordinatorEntity, ClimateEntity):
         self._attr_supported_features = self._ed.supported_features
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._ent)},
+            serial_number=self._ent,
             name=appl_type,
             manufacturer=MANUFACTURER,
             model=self.coordinator.data[self._ent]["ident|deviceIdentLabel|techType"],
@@ -232,7 +235,12 @@ class MieleClimate(CoordinatorEntity, ClimateEntity):
     @property
     def target_temperature(self):
         """Return the target temperature."""
-        if self.coordinator.data[self._ent][self._ed.target_temperature_tag] == -32766:
+        if self.coordinator.data[self._ent].get(
+            "self._ed.target_temperature_tag", -32768
+        ) in (
+            -32766,
+            -32768,
+        ):
             return None
         return round(
             self.coordinator.data[self._ent][self._ed.target_temperature_tag] / 100,

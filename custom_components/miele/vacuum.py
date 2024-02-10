@@ -16,7 +16,7 @@ from homeassistant.components.vacuum import (
     STATE_PAUSED,
     STATE_RETURNING,
     StateVacuumEntity,
-    VacuumEntityDescription,
+    StateVacuumEntityDescription,
     VacuumEntityFeature,
 )
 from homeassistant.core import HomeAssistant
@@ -69,7 +69,7 @@ SUPPORTED_FEATURES = (
 
 
 @dataclass
-class MieleVacuumDescription(VacuumEntityDescription):
+class MieleVacuumDescription(StateVacuumEntityDescription):
     """Class describing Miele vacuum entities."""
 
     data_tag: str | None = None
@@ -160,6 +160,7 @@ class MieleVacuum(CoordinatorEntity, StateVacuumEntity):
         self._attr_unique_id = f"{self.entity_description.key}-{self._ent}"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._ent)},
+            serial_number=self._ent,
             name=appl_type,
             manufacturer=MANUFACTURER,
             model=self.coordinator.data[self._ent]["ident|deviceIdentLabel|techType"],

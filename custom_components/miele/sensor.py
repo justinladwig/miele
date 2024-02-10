@@ -1,4 +1,6 @@
 """Platform for Miele sensor integration."""
+# pylint: disable=too-many-lines
+
 from __future__ import annotations
 
 from collections.abc import Callable
@@ -15,9 +17,9 @@ from homeassistant.components.sensor import (
 )
 from homeassistant.const import (
     PERCENTAGE,
-    TIME_MINUTES,
     UnitOfEnergy,
     UnitOfTemperature,
+    UnitOfTime,
     UnitOfVolume,
 )
 from homeassistant.core import HomeAssistant
@@ -68,6 +70,7 @@ from .const import (
     STEAM_OVEN,
     STEAM_OVEN_COMBI,
     STEAM_OVEN_MICRO,
+    STEAM_OVEN_MK2,
     TUMBLE_DRYER,
     TUMBLE_DRYER_SEMI_PROFESSIONAL,
     WASHER_DRYER,
@@ -125,6 +128,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="temperature",
@@ -153,6 +157,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="temperature2",
@@ -181,6 +186,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="temperature3",
@@ -211,6 +217,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="targetTemperature",
@@ -240,6 +247,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="targetTemperature2",
@@ -270,6 +278,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="targetTemperature3",
@@ -309,6 +318,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
             HOB_INDUCT_EXTR,
         ],
         description=MieleSensorDescription(
@@ -344,6 +354,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_COMBI,
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateProgramId",
@@ -372,6 +383,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             COFFEE_SYSTEM,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateProgramType",
@@ -400,6 +412,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_COMBI,
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateProgramPhase",
@@ -457,6 +470,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_COMBI,
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateRemainingTime",
@@ -464,7 +478,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             data_tag1="state|remainingTime|1",
             translation_key="remaining_time",
             icon="mdi:clock-end",
-            native_unit_of_measurement=TIME_MINUTES,
+            native_unit_of_measurement=UnitOfTime.MINUTES,
             entity_category=EntityCategory.DIAGNOSTIC,
         ),
     ),
@@ -483,6 +497,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             ROBOT_VACUUM_CLEANER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateRemainingTimeAbs",
@@ -510,6 +525,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_COMBI,
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateStartTime",
@@ -517,7 +533,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             data_tag1="state|startTime|1",
             translation_key="start_time",
             icon="mdi:clock-start",
-            native_unit_of_measurement=TIME_MINUTES,
+            native_unit_of_measurement=UnitOfTime.MINUTES,
             entity_category=EntityCategory.DIAGNOSTIC,
         ),
     ),
@@ -535,6 +551,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_COMBI,
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateStartTimeAbs",
@@ -559,6 +576,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             ROBOT_VACUUM_CLEANER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateElapsedTime",
@@ -566,7 +584,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             data_tag1="state|elapsedTime|1",
             translation_key="elapsed_time",
             icon="mdi:timelapse",
-            native_unit_of_measurement=TIME_MINUTES,
+            native_unit_of_measurement=UnitOfTime.MINUTES,
             entity_category=EntityCategory.DIAGNOSTIC,
         ),
     ),
@@ -584,6 +602,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             ROBOT_VACUUM_CLEANER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleSensorDescription(
             key="stateElapsedTimeAbs",
@@ -680,7 +699,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
         ),
     ),
     MieleSensorDefinition(
-        types=[OVEN, OVEN_MICROWAVE, STEAM_OVEN_COMBI],
+        types=[OVEN, OVEN_MICROWAVE, STEAM_OVEN_COMBI, STEAM_OVEN_MK2],
         description=MieleSensorDescription(
             key="coreTemperature",
             data_tag="state|coreTemperature|0|value_raw",
@@ -692,7 +711,7 @@ SENSOR_TYPES: Final[tuple[MieleSensorDefinition, ...]] = (
         ),
     ),
     MieleSensorDefinition(
-        types=[OVEN, OVEN_MICROWAVE, STEAM_OVEN_COMBI],
+        types=[OVEN, OVEN_MICROWAVE, STEAM_OVEN_COMBI, STEAM_OVEN_MK2],
         description=MieleSensorDescription(
             key="coreTargetTemperature",
             data_tag="state|coreTargetTemperature|0|value_raw",
@@ -825,6 +844,7 @@ class MieleSensor(CoordinatorEntity, SensorEntity):
         self._attr_unique_id = f"{self.entity_description.key}-{self._ent}"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._ent)},
+            serial_number=self._ent,
             name=appl_type,
             manufacturer=MANUFACTURER,
             model=self.coordinator.data[self._ent]["ident|deviceIdentLabel|techType"],
@@ -966,10 +986,11 @@ class MieleSensor(CoordinatorEntity, SensorEntity):
             is None
         ):
             return None
-        if (
-            self.coordinator.data[self._ent][self.entity_description.data_tag] == -32766
-            or self.coordinator.data[self._ent][self.entity_description.data_tag]
-            == -32768
+        if self.coordinator.data[self._ent].get(
+            self.entity_description.data_tag, -32768
+        ) in (
+            -32766,
+            -32768,
         ):
             return None
         if (

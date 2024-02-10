@@ -42,6 +42,7 @@ from .const import (
     STEAM_OVEN,
     STEAM_OVEN_COMBI,
     STEAM_OVEN_MICRO,
+    STEAM_OVEN_MK2,
     TUMBLE_DRYER,
     TUMBLE_DRYER_SEMI_PROFESSIONAL,
     WASHER_DRYER,
@@ -93,6 +94,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
             WINE_STORAGE_CONDITIONING_UNIT,
             STEAM_OVEN_MICRO,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
         ],
         description=MieleBinarySensorDescription(
             key="door",
@@ -126,7 +128,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
-            HOB_INDUCT_EXTR,
+            STEAM_OVEN_MK2,
         ],
         description=MieleBinarySensorDescription(
             key="info",
@@ -163,6 +165,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
             HOB_INDUCT_EXTR,
         ],
         description=MieleBinarySensorDescription(
@@ -198,6 +201,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
             HOB_INDUCT_EXTR,
         ],
         description=MieleBinarySensorDescription(
@@ -232,6 +236,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
             HOB_INDUCT_EXTR,
         ],
         description=MieleBinarySensorDescription(
@@ -267,6 +272,7 @@ BINARY_SENSOR_TYPES: Final[tuple[MieleBinarySensorDefinition, ...]] = (
             STEAM_OVEN_MICRO,
             DIALOG_OVEN,
             WINE_CABINET_FREEZER,
+            STEAM_OVEN_MK2,
             HOB_INDUCT_EXTR,
         ],
         description=MieleBinarySensorDescription(
@@ -327,6 +333,7 @@ class MieleBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self._attr_unique_id = f"{self.entity_description.key}-{self._ent}"
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, self._ent)},
+            serial_number=self._ent,
             name=appl_type,
             manufacturer=MANUFACTURER,
             model=self.coordinator.data[self._ent]["ident|deviceIdentLabel|techType"],

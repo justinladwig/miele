@@ -48,6 +48,7 @@ from .const import (
     VERSION,
 )
 from .devcap import (  # noqa: F401
+    TEST_ACTION_19,
     TEST_ACTION_21,
     TEST_ACTION_23,
     TEST_DATA_1,
@@ -57,9 +58,13 @@ from .devcap import (  # noqa: F401
     TEST_DATA_17_CM,
     TEST_DATA_17_CVA,
     TEST_DATA_18,
+    TEST_DATA_19,
     TEST_DATA_21,
     TEST_DATA_23,
     TEST_DATA_24,
+    TEST_DATA_27,
+    TEST_DATA_27_OFF,
+    TEST_DATA_73,
     TEST_DATA_74,
 )
 from .services import async_setup_services
@@ -190,7 +195,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 "Could not decode json from fetch of actions for %s", serial
             )
 
-    # hass.data[DOMAIN][entry.entry_id][ACTIONS]["1223023"] = TEST_ACTION_23
+    # hass.data[DOMAIN][entry.entry_id][ACTIONS]["1223019"] = TEST_ACTION_19
 
     # _LOGGER.debug("First data - flat: %s", coordinator.data)
     # _LOGGER.debug("First actions: %s", hass.data[DOMAIN][entry.entry_id][ACTIONS])
@@ -203,9 +208,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         # data["122A017"] = TEST_DATA_17_CM
         # data["122B017"] = TEST_DATA_17_CVA
         # data["1223018"] = TEST_DATA_18
+        # data["1223019"] = TEST_DATA_19
         # data["1223021"] = TEST_DATA_21
         # data["1223023"] = TEST_DATA_23
         # data["1223024"] = TEST_DATA_24
+        # data["122A027"] = TEST_DATA_27
+        # data["122B027"] = TEST_DATA_27_OFF
+        # data["1223073"] = TEST_DATA_73
         # data["1223074"] = TEST_DATA_74
         flat_result: dict = {}
         try:
@@ -257,7 +266,7 @@ async def get_coordinator(
             async with async_timeout.timeout(API_READ_TIMEOUT):
                 res = await miele_api.request(
                     "GET",
-                    "/devices",
+                    f"/devices?language={hass.config.language}",
                     agent_suffix=f"Miele for Home Assistant/{VERSION}",
                 )
             if res.status == 401:
@@ -266,13 +275,14 @@ async def get_coordinator(
                     raise ConfigEntryAuthFailed(
                         "Authentication failure when fetching data"
                     )
-                else:
-                    raise UpdateFailed(
-                        f"HTTP status 401: {hass.data[DOMAIN][entry.entry_id]['retries_401']}"
-                    )
+                raise UpdateFailed(
+                    f"HTTP status 401: Retry {hass.data[DOMAIN][entry.entry_id]['retries_401']}"
+                )
+            if res.status != 200:
+                raise UpdateFailed(f"HTTP Status {res.status}: fetching {DOMAIN} data")
             result = await res.json()
         except JSONDecodeError as error:
-            _LOGGER.warning("Could not decode json from coordinator fetch")
+            _LOGGER.error("Could not decode json from coordinator fetch")
             raise UpdateFailed(error) from error
 
         hass.data[DOMAIN][entry.entry_id]["retries_401"] = 0
@@ -284,9 +294,13 @@ async def get_coordinator(
         # result["122A017"] = TEST_DATA_17_CM
         # result["122B017"] = TEST_DATA_17_CVA
         # result["1223018"] = TEST_DATA_18
+        # result["1223019"] = TEST_DATA_19
         # result["1223021"] = TEST_DATA_21
         # result["1223023"] = TEST_DATA_23
         # result["1223024"] = TEST_DATA_24
+        # result["122A027"] = TEST_DATA_27
+        # result["122B027"] = TEST_DATA_27_OFF
+        # result["1223073"] = TEST_DATA_73
         # result["1223074"] = TEST_DATA_74
 
         try:
@@ -295,6 +309,7 @@ async def get_coordinator(
                     flatdict.FlatterDict(result[ent], delimiter="|")
                 )
         except TypeError as ex:
+            _LOGGER.error("Error flattening data")
             raise UpdateFailed(ex) from ex
 
         # _LOGGER.debug("Data: %s", flat_result)

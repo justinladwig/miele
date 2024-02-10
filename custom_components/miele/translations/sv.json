@@ -10,7 +10,10 @@
       "missing_configuration": "Komponenten kunde inte konfigureras. Vänligen följ dokumentationen",
       "no_url_available": "Ingen URL tillgänglig. För information om detta fel, [se hjälpavsnittet]({docs_url})",
       "oauth_error": "Tog emot ogiltiga token-data",
-      "reauth_successful": "Re-autentisering lyckades"
+      "oauth_failed": "Fel vid hämtning av åtkomsttoken.",
+      "oauth_timeout": "Timeout vid hämtning av OAuth-token.",
+      "oauth_unauthorized": "OAuth-auktoriseringsfel vid hämtning av åtkomsttoken.",
+      "reauth_successful": "Omautentiseringen lyckades"
     },
     "create_entry": {
       "default": "Autentisering lyckades"
@@ -22,7 +25,51 @@
       "reauth_confirm": {
         "description": "Miele-integrationen behöver förnyad autentisering för kontot: {account}",
         "title": "Förnya autentisering"
+      },
+      "zeroconf_confirm": {
+        "description": "Du kommer lägga till `{name}` och eventuella ytterligare Miele-enheter i Home Assistant.\n\n**För att fullfölja behöver du ange dina behörighets- och inloggningsuppgifter.**",
+        "title": "Bekräfta att du vill lägga till integration för Miele"
       }
+    }
+  },
+  "device_automation": {
+    "condition_type": {
+      "failure": "{entity_name} i felläge",
+      "idle": "{entity_name} i viloläge",
+      "not_connected": "{entity_name} är inte ansluten",
+      "off": "{entity_name} är av",
+      "on": "{entity_name} är på",
+      "pause": "{entity_name} pausar",
+      "program_ended": "{entity_name} har avslutat programmet",
+      "program_interrupted": "{entity_name} har avbrutit programmet",
+      "programmed": "{entity_name}program har valts",
+      "rinse_hold": "{entity_name} i läge sköljstopp",
+      "running": "{entity_name} i drift",
+      "service": "{entity_name} i serviceläge",
+      "supercooling": "{entity_name} i läge snabbkylning",
+      "supercooling_superfreezing": "{entity_name} i läge snabbkylning/snabbinfrysning",
+      "superfreezing": "{entity_name} i läge snabbfrysning",
+      "superheating": "{entity_name} i läge snabbvärmning",
+      "waiting_to_start": "{entity_name} väntar på start"
+    },
+    "trigger_type": {
+      "failure": "{entity_name} Felläge",
+      "idle": "{entity_name} Viloläge",
+      "not_connected": "{entity_name} Inte ansluten",
+      "off": "{entity_name} Av",
+      "on": "{entity_name} På",
+      "pause": "{entity_name} Paus",
+      "program_ended": "{entity_name} Programmet avslutat",
+      "program_interrupted": "{entity_name} Programmet avbrutet",
+      "programmed": "{entity_name} Programmerad",
+      "rinse_hold": "{entity_name} Sköljstopp",
+      "running": "{entity_name} Körs",
+      "service": "{entity_name} Serviceläge",
+      "supercooling": "{entity_name} Snabbkylning",
+      "supercooling_superfreezing": "{entity_name} Snabbkylning/snabbinfrysning",
+      "superfreezing": "{entity_name} Snabbfrysning",
+      "superheating": "{entity_name} Snabbvärmning",
+      "waiting_to_start": "{entity_name} Väntar på att starta"
     }
   },
   "entity": {
@@ -90,6 +137,12 @@
       },
       "plate_4": {
         "name": "Platta 4"
+      },
+      "plate_5": {
+        "name": "Platta 5"
+      },
+      "plate_6": {
+        "name": "Platta 6"
       }
     },
     "sensor": {
@@ -116,7 +169,7 @@
         "name": "Energiförbrukning"
       },
       "energy_forecast": {
-        "name": "Energi prognos"
+        "name": "Energiprognos"
       },
       "finish_at": {
         "name": "Klar kl"
@@ -152,6 +205,7 @@
           "check_appliance": "Kontrollera apparaten",
           "clean_machine": "Rengör maskin",
           "coffee": "Kaffe",
+          "coffee_pot": "Kaffekanna",
           "conventional_heat": "Konventionell värme",
           "cool_air": "Kall luft",
           "cottons": "Bomull",
@@ -165,7 +219,7 @@
           "descaling": "Avkalkning",
           "down_duvets": "Duntäcken",
           "down_filled_items": "Dunfyllda plagg",
-          "drain_spin": "Tömning\/centrifugering",
+          "drain_spin": "Tömning/centrifugering",
           "eco": "ECO",
           "eco_40_60": "ECO 40-60",
           "eco_fan_heat": "Eco varmluft",
@@ -176,7 +230,7 @@
           "express_20": "Express 20'",
           "extra_quiet": "Extra tyst",
           "fan_grill": "Varmluftsgrill",
-          "fan_plus": "Varmluft Plus",
+          "fan_plus": "Varmluft plus",
           "first_wash": "Första tvätt",
           "flat_white": "Flat white",
           "freshen_up": "Uppfräschning",
@@ -188,6 +242,7 @@
           "gentle_smoothing": "Skonsam utslätning",
           "glasses_warm": "Glas",
           "green_tea": "Grönt te",
+          "heat_crockery": "Värma porslin",
           "herbal_tea": "Örtte",
           "hot_milk": "Varm mjölk",
           "hot_water": "Varmt vatten",
@@ -195,6 +250,8 @@
           "intensive": "Intensiv",
           "intensive_bake": "Intensivbakning",
           "japanese_tea": "Japanskt te",
+          "keeping_warm": "Varmhållning",
+          "large_pillows": "Stora kuddar",
           "latte_macchiato": "Latte macchiato",
           "long_coffee": "Long coffee",
           "maintenance": "Underhållsprogram",
@@ -203,17 +260,23 @@
           "milk_pipework_clean": "Rengör mjölkrör",
           "milk_pipework_rinse": "Sköljer mjölkrör",
           "minimum_iron": "Strykfri tvätt",
-          "moisture_plus_fan_plus": "Moisture Plus + Fan Plus",
+          "moisture_plus_auto_roast": "Kombitillagning + Stekautomatik",
+          "moisture_plus_conventional_heat": "Kombitillagning + Över-/undervärme",
+          "moisture_plus_fan_plus": "Kombitillagning + Varmluft plus",
+          "moisture_plus_intensive_bake": "Kombitillagning + Intensivbakning",
           "no_program": "Inget program",
           "normal": "Normal",
           "outerwear": "Ytterkläder",
           "pillows": "Kuddar",
           "proofing": "Impregnering",
+          "prove_15_min": "15 min jäsning",
+          "prove_30_min": "30 min jäsning",
+          "prove_45_min": "45 min jäsning",
           "quick_power_wash": "Snabb powertvätt",
           "rinse": "Sköljning",
           "rinse_out_lint": "Spola ut ludd",
           "ristretto": "Ristretto",
-          "separate_rinse_starch": "Separat sköljning\/stärkning",
+          "separate_rinse_starch": "Separat sköljning/stärkning",
           "shirts": "Skjortor",
           "silent": "Tyst",
           "silks": "Siden",
@@ -352,7 +415,7 @@
           "running": "Igång",
           "service": "Service",
           "supercooling": "Snabbkylning",
-          "supercooling_superfreezing": "Snabbkylning\/snabbinfrysning",
+          "supercooling_superfreezing": "Snabbkylning/snabbinfrysning",
           "superfreezing": "Snabbinfrysning",
           "superheating": "Supervärmning",
           "waiting_to_start": "Väntar på start"
@@ -429,6 +492,12 @@
           }
         }
       }
+    }
+  },
+  "issues": {
+    "hob_not_supported": {
+      "description": "Apparattypen {tech_type} stöds inte fullt ut av Miele-integrationen. Därför kan vissa entiteter saknas eller inte fungera. \n\nRapportera problemet till [den ansvarige på Github]({issue_url})",
+      "title": "Enheten {tech_type} stöds inte fullt ut"
     }
   },
   "selector": {

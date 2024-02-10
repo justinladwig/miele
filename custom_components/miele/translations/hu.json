@@ -1,4 +1,7 @@
 {
+  "application_credentials": {
+    "description": "Kattontson a [\"Get involved\" linkre a Miele fejlesztői oldalán]({register_url}) a hitelesítő adatok kéréséhez, majd adja meg azokat az alábbiakban."
+  },
   "config": {
     "abort": {
       "already_configured": "A fiók már be van állítva",
@@ -7,6 +10,9 @@
       "missing_configuration": "Az integráció nincs beállítva. Kérem, járjon el a dokumentáció szerint.",
       "no_url_available": "Nincs elérhető URL. Bővebb információért [ellenőrizze a súgót]({docs_url}).",
       "oauth_error": "Érvénytelen token érkezett.",
+      "oauth_failed": "Hiba a hozzáférési token beszerzése közben.",
+      "oauth_timeout": "Időtúllépés az OAuth-token feloldásakor.",
+      "oauth_unauthorized": "OAuth engedélyezési hiba a hozzáférési token beszerzése közben.",
       "reauth_successful": "Az újrahitelesítés sikerült"
     },
     "create_entry": {
@@ -19,7 +25,51 @@
       "reauth_confirm": {
         "description": "A Miele integrációnak újra kell hitelesíteni a fiókját: {account}",
         "title": "Integráció újrahitelesítése"
+      },
+      "zeroconf_confirm": {
+        "description": "`{name}` és más Miele készülékek hozzáadása rendszerhez.\n\n**A folyamat befejezéséhez meg kell adnia a hitelesítő adatait.**",
+        "title": "Miele integráció hozzáadása"
       }
+    }
+  },
+  "device_automation": {
+    "condition_type": {
+      "failure": "{entity_name} nem működik",
+      "idle": "{entity_name} tétlen",
+      "not_connected": "{entity_name} nincs csatlakoztatva",
+      "off": "{entity_name} ki van kapcsolva",
+      "on": "{entity_name} be van kapcsolva",
+      "pause": "{entity_name} szünetel",
+      "program_ended": "{entity_name} befejezte a programot",
+      "program_interrupted": "{entity_name} megszakította a programot",
+      "programmed": "{entity_name} Program beállítva",
+      "rinse_hold": "{entity_name} öblítési tartásban van",
+      "running": "{entity_name} Fut",
+      "service": "{entity_name} üzemben van",
+      "supercooling": "{entity_name}: Szuperhűt",
+      "supercooling_superfreezing": "{entity_name}: Szuperhűt/Szuperfagyaszt",
+      "superfreezing": "{entity_name}: Szuperfagyaszt",
+      "superheating": "{entity_name}: Szupermelegít",
+      "waiting_to_start": "{entity_name} Indításra vár"
+    },
+    "trigger_type": {
+      "failure": "{entity_name} Hiba",
+      "idle": "{entity_name} Tétlen",
+      "not_connected": "{entity_name} Nincs csatlakoztatva",
+      "off": "{entity_name} Ki",
+      "on": "{entity_name} Be",
+      "pause": "{entity_name} Szünet",
+      "program_ended": "{entity_name} Program vége",
+      "program_interrupted": "{entity_name} Program megszakítva",
+      "programmed": "{entity_name} Program beállítva",
+      "rinse_hold": "{entity_name} Öblítés visszatartva",
+      "running": "{entity_name} Fut",
+      "service": "{entity_name} Üzemel",
+      "supercooling": "{entity_name} Szuperhűt",
+      "supercooling_superfreezing": "{entity_name} Superhűt/Szuperfagyaszt",
+      "superfreezing": "{entity_name} Szuperfagyaszt",
+      "superheating": "{entity_name} Supermelegít",
+      "waiting_to_start": "{entity_name} Startra késsz"
     }
   },
   "entity": {
@@ -87,11 +137,17 @@
       },
       "plate_4": {
         "name": "Zóna 4"
+      },
+      "plate_5": {
+        "name": "Zóna 5"
+      },
+      "plate_6": {
+        "name": "Zóna 6"
       }
     },
     "sensor": {
       "battery": {
-        "name": "Akku\/Elem"
+        "name": "Akku/Elem"
       },
       "drying_step": {
         "name": "Szárítási fázis",
@@ -162,7 +218,7 @@
           "descaling": "Vízkőmentesítés",
           "down_duvets": "Pehelypaplanok",
           "down_filled_items": "Pehelytöltetűek",
-          "drain_spin": "Ürítés\/forgás",
+          "drain_spin": "Ürítés/forgás",
           "eco": "ECO",
           "eco_40_60": "ECO 40-60",
           "eco_fan_heat": "Eco hőlégkeverés",
@@ -185,6 +241,7 @@
           "gentle_smoothing": "Gyöngéd simítás",
           "glasses_warm": "Üvegek forró",
           "green_tea": "Zöld tea",
+          "heat_crockery": "Edények előmelegítése",
           "herbal_tea": "Herbál tea",
           "hot_milk": "Forró tej",
           "hot_water": "Forró víz",
@@ -192,6 +249,8 @@
           "intensive": "Intenzív",
           "intensive_bake": "Intenzív sütés",
           "japanese_tea": "Japán tea",
+          "keeping_warm": "Melegen tartás",
+          "large_pillows": "Nagy párnák",
           "latte_macchiato": "Latte macchiato",
           "long_coffee": "Hosszú kávé",
           "maintenance": "Karbantartási program",
@@ -200,17 +259,23 @@
           "milk_pipework_clean": "Tejcső tisztítás",
           "milk_pipework_rinse": "Tejcső öblítés",
           "minimum_iron": "Vasaláskímélő",
-          "moisture_plus_fan_plus": "Pára Plusz + Ventilátor Plusz",
+          "moisture_plus_auto_roast": "Nedvesség plusz + automatikus sütés",
+          "moisture_plus_conventional_heat": "Nedvesség plusz + hagyományos hő",
+          "moisture_plus_fan_plus": "Pára Plusz + Venti Plusz",
+          "moisture_plus_intensive_bake": "Nedvesség plusz + intenzív sütés",
           "no_program": "Nincs program",
           "normal": "Normál",
           "outerwear": "Felsőruházat",
           "pillows": "Párnák",
           "proofing": "Vízzáró sport",
+          "prove_15_min": "15 perces teszt",
+          "prove_30_min": "30 perces teszt",
+          "prove_45_min": "45 perces teszt",
           "quick_power_wash": "QuickPowerWash",
           "rinse": "Öblítés",
           "rinse_out_lint": "Szösztelenítés",
           "ristretto": "Ristretto",
-          "separate_rinse_starch": "Külön öblítés\/keményítés",
+          "separate_rinse_starch": "Külön öblítés/keményítés",
           "shirts": "Pólók",
           "silent": "Csendes",
           "silks": "Selymek",
@@ -231,7 +296,7 @@
           "warm_air": "Meleg levegő",
           "white_tea": "Tea",
           "woollens": "Gyapjúk",
-          "woollens_handcare": "Kézi gyapjú"
+          "woollens_handcare": "Gyapjú, kézi"
         }
       },
       "program_phase": {
@@ -247,7 +312,7 @@
           "cleaning": "Tisztítás",
           "comfort_cooling": "Komfort hűtés",
           "cooling_down": "Lehűlés",
-          "dirty_sensors": "Piszkos érzékelők",
+          "dirty_sensors": "Érzékelők elszennyeződve",
           "disinfecting": "Fertőtlenítés",
           "dispensing": "Kiadagolás",
           "docked": "Dokkolva",
@@ -349,7 +414,7 @@
           "running": "Fut",
           "service": "Szervíz",
           "supercooling": "Superhűtés",
-          "supercooling_superfreezing": "Superhűtés\/Szuperfagyasztás",
+          "supercooling_superfreezing": "Superhűtés/Szuperfagyasztás",
           "superfreezing": "Szuperfagyasztás",
           "superheating": "Supermelegítés",
           "waiting_to_start": "Várakozás indulásra"
@@ -415,7 +480,7 @@
               "blocked_brushes": "Kefék blokkolva",
               "blocked_drive_wheels": "Iránykerekek blokkolva",
               "blocked_front_wheel": "Első kerék blokkolva",
-              "check_dust_box_and_filter": "Pordoboz és szűrőt ellenőrizni",
+              "check_dust_box_and_filter": "Pordobozt és szűrőt ellenőrizni",
               "dirty_sensors": "Piszkos érzékelők",
               "dust_box_missing": "Hiányzó pordoboz",
               "going_to_target_area": "Haladás a cél felé",
@@ -426,6 +491,59 @@
           }
         }
       }
+    }
+  },
+  "issues": {
+    "hob_not_supported": {
+      "description": "A Miele integrációja nem támogatja teljes mértékben a {tech_type} típusú készüléket. Ezért előfordulhat, hogy egyes entitások hiányoznak vagy hibásan működnek. \n\n Kérem, jelentse a problémát [a Github-on az integráció repójában]({issue_url})",
+      "title": "{tech_type} készülék nem támogatott teljes mértékben"
+    }
+  },
+  "selector": {
+    "process_action_options": {
+      "options": {
+        "pause": "Szünet",
+        "start": "Start",
+        "start_supercooling": "Szuperhűtés bekapcsolása",
+        "start_superfreezing": "Szuperfagyasztás bekapcsolása",
+        "stop": "Stop",
+        "stop_supercooling": "Szuperhűtés kikapcsolása",
+        "stop_superfreezing": "Szuperfagyasztás kikapcsolása"
+      }
+    }
+  },
+  "services": {
+    "generic_action": {
+      "description": "Egy művelet végrehajtása egy eszközön",
+      "name": "Általános művelet végrehajtása"
+    },
+    "process_action": {
+      "description": "Folyamatműveleteket hajt végre, ha az előfeltételek teljesülnek.",
+      "fields": {
+        "action": {
+          "description": "Válasszon ki egy végrehajtandó folyamatműveletet.",
+          "name": "Művelet"
+        }
+      },
+      "name": "Folyamat művelet végrehajtása"
+    },
+    "raw": {
+      "description": "Szolgáltatás végrehajtása minimális érvényesítéssel.",
+      "fields": {
+        "extra": {
+          "description": "Paraméterekkel töltött dict",
+          "name": "Extra"
+        },
+        "serialno": {
+          "description": "A készülék gyáriszáma",
+          "name": "Gyári szám"
+        }
+      },
+      "name": "Nyers művelet végrehajtása"
+    },
+    "set_program": {
+      "description": "Program beállítása és elindítása opcionális paraméterekkel.",
+      "name": "Program beállítása"
     }
   },
   "system_health": {
